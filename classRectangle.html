@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Rectangle Class </title>
+    <style>
+        body { font-family: Arial; padding: 20px; }
+        input { margin: 5px 0; padding: 5px; width: 80px; }
+        button { padding: 6px 12px; margin-top: 5px; }
+        #info { margin-top: 15px; font-size: 16px; }
+    </style>
+</head>
+<body>
+
+<h2>🔷 Lớp Rectangle</h2>
+
+<canvas id="myCanvas" width="400" height="300" style="border:1px solid black;"></canvas>
+
+<br><br>
+
+Chiều dài: <input type="number" id="lengthInput" value="150"><br>
+Chiều rộng: <input type="number" id="widthInput" value="80"><br>
+<button onclick="updateRectangle()">Cập nhật hình</button>
+
+<div id="info"></div>
+
+<script>
+
+    // ===================== Lớp Rectangle ======================
+    class Rectangle {
+        constructor(length, width) {
+            this.length = length;
+            this.width = width;
+        }
+
+        getArea() {
+            return this.length * this.width;
+        }
+
+        getPerimeter() {
+            return 2 * (this.length + this.width);
+        }
+
+        draw(canvasId) {
+            let canvas = document.getElementById(canvasId);
+            let ctx = canvas.getContext("2d");
+
+            // Xóa canvas
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Vẽ hình chữ nhật
+            ctx.fillStyle = "skyblue";
+            ctx.fillRect(20, 20, this.length, this.width);
+        }
+    }
+
+    // ==================== Khởi tạo đối tượng ban đầu ====================
+    let rect = new Rectangle(150, 80);
+    rect.draw("myCanvas");
+    showInfo();
+
+    // ==================== Hàm cập nhật ====================
+    function updateRectangle() {
+        let newLength = Number(document.getElementById("lengthInput").value);
+        let newWidth  = Number(document.getElementById("widthInput").value);
+
+        rect.length = newLength;
+        rect.width = newWidth;
+
+        rect.draw("myCanvas");
+        showInfo();
+    }
+
+    // ==================== Hiển thị diện tích + chu vi ====================
+    function showInfo() {
+        document.getElementById("info").innerHTML =
+            `<b>Diện tích:</b> ${rect.getArea()} <br>
+         <b>Chu vi:</b> ${rect.getPerimeter()}`;
+    }
+
+</script>
+
+</body>
+</html>
